@@ -1,17 +1,15 @@
 import styled from "styled-components";
-import Image from "next/image";
+import breakpoints from "../constants/breakpoints";
 
 const Wrapper = styled.div`
   margin: 0 auto;
   padding: 0 1rem;
   width: 100%;
-  max-width: 46.5rem;
-`;
+  max-width: 72rem;
 
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @media (max-width: ${breakpoints.lg}) {
+    max-width: 46.5rem;
+  }
 `;
 
 const Button = styled.button`
@@ -31,8 +29,4 @@ const Button = styled.button`
   }
 `;
 
-const StyledImage = styled(Image)`
-  border-radius: 10px;
-`;
-
-export { Wrapper, Container, Button, StyledImage };
+export { Wrapper, Button };

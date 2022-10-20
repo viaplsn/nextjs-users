@@ -1,27 +1,27 @@
-import Link from "next/link";
-import { Container, Gradient, Title } from "./card.styled";
-import { StyledImage } from "../../styles/utils.styled";
-import { Anime } from "../../types/AnimeList";
+import Image from "next/image";
+import { Container, ImageBackground, ImageWrapper, Title, Email } from "./card.styled";
+import { User } from "../../types/UserList";
 
 interface CardProps {
-  data: Anime;
+  data: User;
   priority: boolean;
+  index: number;
 }
 
-const Card = ({ data, priority }: CardProps): JSX.Element => (
-  <Link href={`anime/${data.mal_id}`}>
-    <Container>
-      <Gradient />
-      <StyledImage
-        src={data.images.webp.image_url}
-        alt={data.title}
-        layout="fill"
-        objectFit="cover"
-        priority={priority}
-      />
-      <Title>{data.title}</Title>
+const Card = ({ data, priority, index }: CardProps): JSX.Element => {
+  const name = `${data.name.first} ${data.name.last}`;
+
+  return (
+    <Container index={index}>
+      <ImageBackground index={index}>
+        <ImageWrapper>
+          <Image src={data.picture.large} alt={name} layout="fill" objectFit="cover" priority={priority} />
+        </ImageWrapper>
+      </ImageBackground>
+      <Title>{name}</Title>
+      <Email>{data.email}</Email>
     </Container>
-  </Link>
-);
+  );
+};
 
 export default Card;

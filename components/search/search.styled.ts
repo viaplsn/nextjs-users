@@ -1,57 +1,61 @@
-import styled, { css, keyframes } from "styled-components";
+import styled from "styled-components";
+import { Search } from "@styled-icons/bootstrap";
 import breakpoints from "../../constants/breakpoints";
 
-const fadeInAnimation = keyframes`
- 0% { opacity: 0 }
- 100% { opacity: 1 }
-`;
-
 const Container = styled.div`
+  width: 22rem;
+  height: 2rem;
+  padding: 0 15px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 30px;
+  background-color: var(--brightgray);
+  transition: all 0.3s linear;
+
+  &:hover,
+  &:focus-within {
+    transform: scale(1.05);
+    border-color: var(--black);
+  }
+
+  @media (max-width: ${breakpoints.md}) {
+    width: 18rem;
+  }
+  @media (max-width: ${breakpoints.sm}) {
+    display: none;
+  }
 `;
 
-const searchStyles = css`
-  width: 100%;
-  background: var(--white);
-  border: 1px solid transparent;
-  border-radius: 2.125rem;
-  font-weight: 500;
-  font-size: 1rem;
-  line-height: 1.125rem;
+const SearchIcon = styled(Search)`
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-right: 0.5rem;
   color: var(--black);
-  transform: scale(0.95);
-  transition: all 0.3s linear;
-  &:hover {
-    transform: scale(1);
-  }
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 1.5rem 2.25rem;
+  height: 100%;
+  border: none;
+  padding: 0;
+  margin: 0;
   outline: none;
+  background: transparent;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  color: var(--black);
+
   &::placeholder {
-    color: var(--graycloud);
-    font-weight: 400;
+    color: var(--black);
   }
-  ${searchStyles}
-`;
 
-const Results = styled.div`
-  margin-top: 1rem;
-  padding: 2.25rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  animation-name: ${fadeInAnimation};
-  animation-duration: 1s;
-  ${searchStyles};
-
-  @media (max-width: ${breakpoints.md}) {
-    padding: 1.5rem 1rem;
+  &:focus {
+    ${Container} {
+      transform: scale(0.95);
+      border-color: var(--black);
+    }
   }
 `;
 
-export { Container, Input, Results };
+export { Container, SearchIcon, Input };

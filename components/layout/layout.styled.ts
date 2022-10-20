@@ -1,12 +1,17 @@
 import styled from "styled-components";
 import breakpoints from "../../constants/breakpoints";
-import layoutDimensions from "../../constants/layout-dimensions";
+import headerHeight from "../../constants/headerHeight";
 
 const Main = styled.main`
-  min-height: calc(100vh - ${layoutDimensions.md});
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: calc(100vh - ${headerHeight.desktop});
+  padding-bottom: 2.5rem;
 
   @media (max-width: ${breakpoints.sm}) {
-    min-height: calc(100vh - ${layoutDimensions.sm});
+    min-height: calc(100vh - ${headerHeight.mobile});
   }
 `;
 

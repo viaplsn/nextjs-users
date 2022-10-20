@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 import Header from "../header";
-import Footer from "../footer";
-import { Wrapper } from "../../styles/utils.styled";
 import { Main } from "./layout.styled";
+import { Wrapper } from "../../styles/utils.styled";
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,7 +13,6 @@ const Layout = ({ children }: LayoutProps): JSX.Element => (
     <Wrapper>
       <Main>{children}</Main>
     </Wrapper>
-    <Footer />
   </>
 );
 

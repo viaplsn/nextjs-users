@@ -1,13 +1,16 @@
-import { GetServerSideProps, NextPage } from "next";
+import { useState, useEffect } from "react";
+import { GetStaticProps, NextPage } from "next";
+import UsersContext from "../context/usersContext";
 import Layout from "../components/layout";
 import CardsSection from "../components/cards-section";
-import getData from "../utils/getData";
-import AnimeList from "../types/AnimeList";
+import scrollToTheTop from "../utils/scrollToTheTop";
+import UserList from "../types/UserList";
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const animeList = await getData(`top/anime?limit=9&page=${query.page || 1}`);
+export const getStaticProps: GetStaticProps = async () => {
+  const result = await fetch("https://randomuser.me/api/?results=200&seed=nextjs&inc=gender,name,email,login,picture");
+  const userList = await result.json();
 
-  if (!animeList.data.length) {
+  if (!userList.results.length) {
     return {
       notFound: true,
     };
@@ -15,19 +18,39 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   return {
     props: {
-      animeList,
+      userList,
     },
   };
 };
 
 interface HomePageProps {
-  animeList: AnimeList;
+  userList: UserList;
 }
 
-const Home: NextPage<HomePageProps> = ({ animeList }) => (
-  <Layout>
-    <CardsSection data={animeList.data} pagination={animeList.pagination} />
-  </Layout>
-);
+const Home: NextPage<HomePageProps> = ({ userList }) => {
+  const [users, setUsers] = useState(userList.results);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const usersPerPage = 12;
+  const pageCount = Math.ceil(users.length / usersPerPage);
+  const pagesVisited = (pageNumber - 1) * usersPerPage;
+  const hasNextPage = pageNumber < pageCount;
+  const displayUsers = users.slice(pagesVisited, pagesVisited + usersPerPage);
+
+  useEffect(() => {
+    setTimeout(scrollToTheTop, 200);
+  }, [pageNumber]);
+
+  const pagination = { pageNumber, hasNextPage, action: (number: number) => setPageNumber(number) };
+  const providerValues = { users: userList.results, setUsers, resetPageNumber: () => setPageNumber(1) };
+
+  return (
+    <UsersContext.Provider value={providerValues}>
+      <Layout>
+        <CardsSection data={displayUsers} pagination={pagination} />
+      </Layout>
+    </UsersContext.Provider>
+  );
+};
 
 export default Home;

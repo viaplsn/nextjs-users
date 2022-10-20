@@ -1,12 +1,15 @@
+import { Container, Message, Title, Description } from "./cards-section.styled";
 import Grid from "../grid";
 import Card from "../card";
-import Pagination from "../pagination";
+import ActionBar from "../action-bar";
+import PaginationBar from "../pagination-bar";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { Anime, PaginationType } from "../../types/AnimeList";
+import { User } from "../../types/UserList";
+import Pagination from "../../types/Pagination";
 
 interface CardsSectionProps {
-  data: Anime[];
-  pagination: PaginationType;
+  data: User[];
+  pagination: Pagination;
 }
 
 const CardsSection = ({ data, pagination }: CardsSectionProps) => {
@@ -14,13 +17,23 @@ const CardsSection = ({ data, pagination }: CardsSectionProps) => {
 
   return (
     <>
-      <Grid>
-        {data.map((anime, index) => {
-          const priority = isMobileScreenSize ? index === 0 : true;
-          return <Card key={anime.mal_id} data={anime} priority={priority} />;
-        })}
-      </Grid>
-      <Pagination paginationData={pagination} />
+      <Container>
+        <ActionBar />
+        {!!data.length ? (
+          <Grid>
+            {data.map((user, index) => {
+              const priority = isMobileScreenSize ? index === 0 : true;
+              return <Card key={user.login.uuid} data={user} priority={priority} index={index} />;
+            })}
+          </Grid>
+        ) : (
+          <Message>
+            <Title>Sorry! No result found :(</Title>
+            <Description>We&apos;re sorry what you were looking for. Please try another way</Description>
+          </Message>
+        )}
+      </Container>
+      <PaginationBar pagination={pagination} />
     </>
   );
 };

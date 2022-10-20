@@ -1,21 +1,30 @@
-import Link from "next/link";
-import SearchButton from "../search-button";
+import { useContext } from "react";
+import { StyledHeader, Container, Logo, StyledSearch } from "./header.styled";
+import Search from "../search";
 import CurrentDate from "../current-date";
-import { Wrapper, Container } from "../../styles/utils.styled";
-import { StyledHeader, Logo } from "./header.styled";
+import UsersContext from "../../context/usersContext";
+import { Wrapper } from "../../styles/utils.styled";
 
-const Header = (): JSX.Element => (
-  <StyledHeader>
-    <Wrapper>
-      <Container>
-        <Link href="/" passHref>
-          <Logo>Anime</Logo>
-        </Link>
-        <SearchButton />
-        <CurrentDate />
-      </Container>
-    </Wrapper>
-  </StyledHeader>
-);
+const Header = (): JSX.Element => {
+  const context = useContext(UsersContext);
+
+  const handleLogoClick = () => {
+    context?.resetPageNumber();
+    context?.setUsers(context?.users);
+  };
+
+  return (
+    <StyledHeader>
+      <Wrapper>
+        <Container>
+          <Logo onClick={handleLogoClick}>Users</Logo>
+          <Search />
+          <CurrentDate />
+        </Container>
+        <StyledSearch />
+      </Wrapper>
+    </StyledHeader>
+  );
+};
 
 export default Header;

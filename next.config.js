@@ -6,16 +6,16 @@ const nextConfig = {
     styledComponents: true
   },
   images: {
-    domains: ["cdn.myanimelist.net"]
+    domains: ["randomuser.me"]
   },
   async redirects() {
     return [
       {
-        source: '/1',
-        destination: '/',
+        source: "/1",
+        destination: "/",
         permanent: true
       }
-    ]
+    ];
   }
 };
 

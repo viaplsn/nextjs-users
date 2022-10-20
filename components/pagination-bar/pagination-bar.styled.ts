@@ -1,20 +1,9 @@
 import styled, { css } from "styled-components";
 import breakpoints from "../../constants/breakpoints";
-import { ArrowLeftShort, ArrowRightShort } from "@styled-icons/bootstrap";
+import { ArrowLeftShort, ArrowRightShort, ChevronUp } from "@styled-icons/bootstrap";
 import { Button } from "../../styles/utils.styled";
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 2rem;
-
-  @media (max-width: ${breakpoints.sm}) {
-    margin-top: 1rem;
-  }
-`;
-
-const arrowStyles = css`
+const iconStyles = css`
   width: 22px;
   color: var(--black);
 
@@ -23,12 +12,35 @@ const arrowStyles = css`
   }
 `;
 
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: ${breakpoints.sm}) {
+    margin-top: 1rem;
+  }
+`;
+
+const PaginationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const ArrowLeft = styled(ArrowLeftShort)`
-  ${arrowStyles}
+  ${iconStyles}
 `;
 
 const ArrowRight = styled(ArrowRightShort)`
-  ${arrowStyles}
+  ${iconStyles}
+`;
+
+const Chevron = styled(ChevronUp)`
+  ${iconStyles}
 `;
 
 const StyledButton = styled(Button)`
@@ -61,4 +73,4 @@ const PageNumber = styled.p`
   }
 `;
 
-export { Container, ArrowLeft, ArrowRight, StyledButton, PageNumber };
+export { Container, PaginationContainer, ArrowLeft, ArrowRight, Chevron, StyledButton, PageNumber };

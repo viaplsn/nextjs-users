@@ -6,7 +6,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Anime</title>
+        <title>Users</title>
       </Head>
       <GlobalStyle />
       <Component {...pageProps} />
